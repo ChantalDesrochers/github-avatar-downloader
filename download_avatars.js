@@ -35,10 +35,16 @@ function downloadImageByURL(url, filePath) {
 
 getRepoContributors(process.argv[2], process.argv[3], function(err, result) {
 
+if(process.argv < [2] || process.argv > [3]) {
+  console.log("must specify repo owner and repo name")
+  throw err;
+  // console.log(err);
+};
+console.log("Error", err);
     result.forEach(function(el) {
       downloadImageByURL(el['avatar_url'], './avatars/' + el['login'])
       // console.log(el['avatar_url']);
     });
-    console.log("Errors:", err);
+
     // console.log("Result:", result);
   })
