@@ -14,12 +14,17 @@ function getRepoContributors(repoOwner, repoName, cb) {
     url: "https://api.github.com/repos/" + repoOwner + "/" + repoName + "/contributors",
     headers: {
       'User-Agent': 'request',
-      'Authorization': secrets
+      'Authorization': 'token ' + secrets.GITHUB_TOKEN
     }
   };
 
   request(options, function(err, res, body) {
-    cb(err, body);
+    var data = JSON.parse(body);
+    // console.log(body[0].avator_url)
+    var data2 = data.map(function(el) {
+       return el['avatar_url'];
+    })
+    cb(err, data2);
   });
 }
 
